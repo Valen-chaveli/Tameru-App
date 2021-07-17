@@ -1,0 +1,56 @@
+version: "3.7"
+services: 
+    mysql:
+        image: mysql:8.0.25
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: valen.ValenNihongo7
+            MYSQL_HOST: mysql
+            MYSQL_DATABASE: tameru
+        volumes: 
+            - ./schemas:/var/lib/mysql:rw
+
+        networks: 
+            mysql_network:
+                aliases: 
+                    - mysql_host
+
+    phpmyadmin:
+        image: phpmyadmin:5.1.1
+        ports:
+            - 8080:80
+        environment: 
+            MYSQL_ROOT_PASSWORD: valen.ValenNihongo7
+            PMA_HOST: mysql
+            PMA_USER: root
+            PMA_PASSWORD: valen.ValenNihongo7
+
+        networks: 
+            mysql_network:
+                aliases: 
+                    - phpmyadmin_host
+    api:
+        build: .
+        restart: always
+        ports:
+            - 3000:3000
+        volumes:
+            - ./:/usr/src/app
+        depends_on: 
+            - mysql
+        networks: 
+            mysql_network:
+                aliases:
+                    - api_host
+   
+volumes: 
+    schemas: {}
+networks: 
+    mysql_network:
+        name: mysql_net
+        driver: bridge
+        ipam:
+            driver: default
+
+        
