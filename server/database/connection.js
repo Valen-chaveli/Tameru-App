@@ -14,13 +14,4 @@ var con = mysql.createPool({
   waitForConnections: true,
 });
 
-/* con.connect(function (err) {
-  if (err) {
-    console.log('Error al conectar a la Base de datos');
-    console.log(err);
-  } else {
-    console.log('Se ha conectado correctamente a la Base de Datos');
-  }
-}); */
-
 module.exports = con;

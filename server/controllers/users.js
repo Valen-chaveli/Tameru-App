@@ -3,9 +3,7 @@ const bcrypt = require('bcrypt-nodejs');
 const { createToken } = require('../services/jwt');
 
 function example(req, res) {
-  connection.query('SELECT * FROM users', (err, results, fields) => {
-    console.log(results);
-  });
+  connection.query('SELECT * FROM users', (err, results, fields) => {});
 }
 
 function registerUser(req, res) {
@@ -67,7 +65,8 @@ function loginUser(req, res) {
 
     bcrypt.compare(params.password, user[0].password, (err, check) => {
       if (err) return res.send({ err });
-      if (check) return res.send({ token: createToken(user), user: user });
+      if (check)
+        return res.send({ token: createToken(user[0]), user: user[0] });
       else return res.send({ message: 'La contraseña es incorrecta' });
     });
   });
