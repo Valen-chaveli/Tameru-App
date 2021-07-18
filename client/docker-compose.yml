@@ -1,0 +1,22 @@
+version: "3.7"
+services: 
+    front:
+        build: .
+        restart: always
+        environment:
+            CHOKIDAR_USEPOLLING: "true"
+        ports:
+            - 8081:3000
+        volumes: 
+            - ./:/app
+        networks:
+            mysql_network:
+                aliases:
+                    - front-host
+
+networks: 
+    mysql_network:
+        name: mysql_net
+        driver: bridge
+        ipam:
+            driver: default
