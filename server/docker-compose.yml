@@ -42,11 +42,10 @@ services:
         networks: 
             mysql_network:
                 aliases:
-                    - api_host
-   
+                    - api_host   
 volumes: 
     schemas: {}
-networks: 
+networks:
     mysql_network:
         name: mysql_net
         driver: bridge
