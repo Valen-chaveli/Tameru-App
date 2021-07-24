@@ -1,6 +1,8 @@
 const connection = require('../database/connection');
 const bcrypt = require('bcrypt-nodejs');
 const { createToken } = require('../services/jwt');
+const jwt = require('jwt-simple');
+const moment = require('moment');
 
 function example(req, res) {
   connection.query('SELECT * FROM users', (err, results, fields) => {});
@@ -72,8 +74,25 @@ function loginUser(req, res) {
   });
 }
 
+function checkToken(req, res) {
+  let token = req.body.token;
+  console.log(token);
+  try {
+    var payload = jwt.decode(token, process.env.SECRET_KEY_TOKEN);
+
+    if (payload.exp <= moment.unix()) {
+      return res.send({ isValid: false });
+    }
+  } catch (error) {
+    return res.send({ isValid: false });
+  }
+
+  return res.send({ payload: payload, isValid: true });
+}
+
 module.exports = {
   example,
   registerUser,
   loginUser,
+  checkToken,
 };
