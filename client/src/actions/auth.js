@@ -1,4 +1,5 @@
-import { fetchCheckToken } from '../services/fetchAuthService';
+import { setToken } from '../helpers/auth_helper';
+import { fetchCheckToken, fetchDoLogin } from '../services/fetchAuthService';
 import { types } from '../types/types';
 
 export const startChecking = () => {
@@ -10,6 +11,20 @@ export const startChecking = () => {
   };
 };
 
+export const startLoggin = (user) => {
+  return async (dispatch) => {
+    let data = await fetchDoLogin(user);
+
+    if (data.error) dispatch(authError(data.message));
+    else {
+      if (data.token) setToken(data.token);
+      dispatch(login(data.user));
+    }
+  };
+};
+
 const checkingFinish = () => ({ type: types.authCheckingFinish });
 
 const login = (user) => ({ type: types.authLogin, payload: user });
+
+const authError = (message) => ({ type: types.authError, payload: message });

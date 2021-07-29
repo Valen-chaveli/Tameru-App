@@ -14,9 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles/authStyles';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { startLoggin } from '../../actions/auth';
-import Alert from '@material-ui/lab/Alert';
 
 function Copyright() {
   return (
@@ -31,12 +28,11 @@ function Copyright() {
   );
 }
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const { error, message } = useSelector((state) => state.auth);
 
   const [user, setUser] = useState({
+    name: '',
     email: '',
     password: '',
   });
@@ -49,12 +45,6 @@ export default function LoginScreen() {
     console.log(user);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(startLoggin(user));
-    console.log('dsa');
-  };
-
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -65,14 +55,20 @@ export default function LoginScreen() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Inicio de Sesión
+            Registro de usuario
           </Typography>
-          {error && (
-            <Alert className={classes.alert} severity="error">
-              {message}
-            </Alert>
-          )}
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Nombre"
+              name="name"
+              autoFocus
+              onChange={(e) => handleChange(e)}
+            />
             <TextField
               variant="outlined"
               margin="normal"
@@ -108,7 +104,7 @@ export default function LoginScreen() {
               color="primary"
               className={classes.submit}
             >
-              Iniciar Sesión
+              Registrate
             </Button>
             <Grid container>
               <Grid item xs>
@@ -117,8 +113,8 @@ export default function LoginScreen() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/auth/register" variant="body2">
-                  {'¿No tienes cuenta? Registrate aquí'}
+                <Link to="/auth/login" variant="body2">
+                  {'¿Ya tienes cuenta? Inica Sesión aquí'}
                 </Link>
               </Grid>
             </Grid>

@@ -62,14 +62,21 @@ function loginUser(req, res) {
   connection.query(SQL, (err, user) => {
     if (err) return res.send({ message: 'Error al buscar al usuario' });
     if (user.length == 0) {
-      return res.send({ message: 'No se ha encontrado el usuario' });
+      return res.send({
+        message: 'No se ha encontrado el usuario',
+        error: true,
+      });
     }
 
     bcrypt.compare(params.password, user[0].password, (err, check) => {
       if (err) return res.send({ err });
       if (check)
         return res.send({ token: createToken(user[0]), user: user[0] });
-      else return res.send({ message: 'La contraseña es incorrecta' });
+      else
+        return res.send({
+          message: 'La contraseña es incorrecta',
+          error: true,
+        });
     });
   });
 }

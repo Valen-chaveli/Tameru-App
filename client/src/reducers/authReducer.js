@@ -3,6 +3,7 @@ import { types } from '../types/types';
 let initialState = {
   logged: false,
   checking: true,
+  error: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -28,6 +29,14 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         logged: false,
         checking: false,
+      };
+    }
+
+    case types.authError: {
+      return {
+        ...state,
+        error: true,
+        message: action.payload,
       };
     }
 
