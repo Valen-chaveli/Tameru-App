@@ -14,7 +14,9 @@ import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles/authStyles';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { startRegister } from '../../actions/auth';
+import Alert from '@material-ui/lab/Alert';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -29,6 +31,8 @@ function Copyright() {
 }
 
 export default function RegisterScreen() {
+  const dispatch = useDispatch();
+  const { error, message } = useSelector((state) => state.auth);
   const classes = useStyles();
 
   const [user, setUser] = useState({
@@ -45,6 +49,11 @@ export default function RegisterScreen() {
     console.log(user);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(startRegister(user));
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -57,7 +66,16 @@ export default function RegisterScreen() {
           <Typography component="h1" variant="h5">
             Registro de usuario
           </Typography>
-          <form className={classes.form} noValidate>
+          {error && (
+            <Alert className={classes.alert} severity="error">
+              {message}
+            </Alert>
+          )}
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={(e) => handleSubmit(e)}
+          >
             <TextField
               variant="outlined"
               margin="normal"

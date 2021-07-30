@@ -19,9 +19,11 @@ function registerUser(req, res) {
     let SQL_CHECK_USER = `SELECT * FROM users WHERE email='${params.email}'`;
 
     connection.query(SQL_CHECK_USER, (err, users) => {
-      if (err) return res.status(401).send({ message: 'Error' });
+      if (err) return res.status(401).send({ message: 'Error', error: true });
       if (users.length > 0) {
-        return res.status(200).send({ message: 'Este usuario ya existe' });
+        return res
+          .status(200)
+          .send({ message: 'Este usuario ya existe', error: true });
       } else {
         bcrypt.hash(params.password, null, null, (err, hash) => {
           let SQL = `INSERT INTO users 
@@ -29,12 +31,13 @@ function registerUser(req, res) {
           VALUES ('${params.name}','${params.email}', '${hash}')`;
 
           connection.query(SQL, (err, userRegistred) => {
-            if (err) return res.status(401).send({ message: err });
+            if (err) return res.status(401).send({ message: err, error: true });
 
             connection.query(
               `SELECT * FROM users WHERE email='${params.email}'`,
               (err, user) => {
-                if (err) return res.status(401).send({ message: err });
+                if (err)
+                  return res.status(401).send({ message: err, error: true });
                 user.forEach((u) => {
                   let token = createToken(u);
                   return res.status(200).send({ token: token, user: u });
@@ -46,7 +49,10 @@ function registerUser(req, res) {
       }
     });
   } else {
-    return res.send({ message: 'Envie todos los campos requeridos' });
+    return res.send({
+      message: 'Envie todos los campos requeridos',
+      error: true,
+    });
   }
 }
 
