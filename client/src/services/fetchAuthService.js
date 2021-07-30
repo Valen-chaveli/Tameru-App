@@ -23,3 +23,12 @@ export const fetchDoLogin = async (user) => {
     console.log(error);
   }
 };
+
+export const fetchDoRegister = async (user) => {
+  try {
+    let { data } = await api.post('/users/register', user);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
