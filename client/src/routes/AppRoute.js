@@ -16,6 +16,15 @@ export const AppRoute = () => {
     dispatch(startChecking());
   }, [dispatch]);
 
+  if (checking) {
+    return (
+      <div>
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+      </div>
+    );
+  }
+
   return (
     <Router>
       <div>
