@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme) => ({
   title: {
     color: '#D938D2',
     fontWeight: 'bold',
@@ -8,6 +8,11 @@ export const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: '10px',
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
   },
   root: {
     marginTop: '20px',
@@ -18,6 +23,8 @@ export const useStyles = makeStyles({
   },
   sphere: {
     borderRadius: '50%',
+
+    height: '400px',
     border: '1px solid #D938D2',
     padding: '10px',
     display: 'flex',
@@ -25,7 +32,7 @@ export const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
 
-    boxShadow: '3px 2px 3px 2px #D938D2',
+    boxShadow: 'inset 3px 2px 3px 2px #D938D2',
   },
 
   totalQuantitySavings: {
@@ -44,4 +51,13 @@ export const useStyles = makeStyles({
     color: '#D938D2',
     marginTop: '5px',
   },
-});
+
+  icon: {
+    borderRadius: '50%',
+    padding: '3px',
+    '&:active': {
+      backgroundColor: '#eb98e7',
+      transition: '0.6s',
+    },
+  },
+}));

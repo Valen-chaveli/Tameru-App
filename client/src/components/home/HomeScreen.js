@@ -3,6 +3,7 @@ import { Box, Grid } from '@material-ui/core';
 import { Savings } from '../savings/Savings';
 import { InsertSavings } from '../savings/InsertSavings';
 import { useStyles } from './styles/homeStyles';
+import { HistorySavings } from '../savings/HistorySavings';
 
 export const HomeScreen = () => {
   const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -10,12 +11,12 @@ export const HomeScreen = () => {
 
   return (
     <Grid container>
-      <Grid item xs={12} md={4}>
-        <Savings />
-      </Grid>
       {!isDesktop && (
         <>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={4}>
+            <Savings />
+          </Grid>
+          <Grid item xs={12} md={4}>
             <InsertSavings />
           </Grid>
         </>
@@ -23,11 +24,14 @@ export const HomeScreen = () => {
 
       {isDesktop && (
         <>
-          <Grid item md={4} className={classes.insertSavings}>
+          <Grid item md={4} className={classes.boxItem}>
             <InsertSavings />
           </Grid>
           <Grid item md={4}>
-            <Box border={2}>Ultimos Ahorros</Box>
+            <Savings />
+          </Grid>
+          <Grid item md={4} className={classes.boxItem}>
+            <HistorySavings />
           </Grid>
           <Grid item md={12}>
             <Box border={2}>Estadisticas</Box>

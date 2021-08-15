@@ -11,7 +11,12 @@ export const DashboardRoutes = () => {
       primary: {
         main: '#D938D2',
       },
-      secondary: purple,
+      secondary: {
+        main: '#792C76',
+      },
+      third: {
+        main: '#792C76',
+      },
     },
     typography: {
       fontFamily: 'Roboto',

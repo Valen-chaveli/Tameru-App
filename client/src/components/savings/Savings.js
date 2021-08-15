@@ -7,11 +7,10 @@ import {
 } from '@material-ui/core';
 import { TableBody } from '@material-ui/core';
 import { TableHead } from '@material-ui/core';
-import { Typography } from '@material-ui/core';
-import { Button } from '@material-ui/core';
 import { useStyles } from './styles/savingsStyle';
-
 import DeleteIcon from '@material-ui/icons/Delete';
+import { CurrentAccount } from '../account/CurrentAccount';
+
 const data = [
   { date: '23-02-21', quantity: '+300€' },
   { date: '23-02-21', quantity: '+305€' },
@@ -20,11 +19,10 @@ const data = [
 
 export const Savings = () => {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
-      <div className={classes.title}>
-        <Button className={classes.title}>Cuenta : Viajes</Button>
-      </div>
+      <CurrentAccount />
       <div>
         <Container>
           <div className={classes.sphere}>
@@ -53,7 +51,7 @@ export const Savings = () => {
                           );
                         } else {
                           return (
-                            <TableRow>
+                            <TableRow className={classes.row}>
                               <TableCell>{cell.date}</TableCell>
                               <TableCell>{cell.quantity}</TableCell>
                             </TableRow>
@@ -64,7 +62,7 @@ export const Savings = () => {
                   </Table>
                 </TableContainer>
                 <div className={classes.deleteIcon}>
-                  <DeleteIcon style={{ fontSize: 30 }} />
+                  <DeleteIcon style={{ fontSize: 30 }} color="secondary" />
                 </div>
               </Container>
             </div>

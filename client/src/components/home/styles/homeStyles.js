@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles({
-  insertSavings: {
+  boxItem: {
     display: 'flex',
     alignItems: 'center',
+    marginTop: '50px',
   },
 });
